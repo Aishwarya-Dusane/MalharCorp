@@ -1,12 +1,32 @@
 import { MessageCircle, MapPin, Phone, ExternalLink } from "lucide-react";
+import type { MouseEvent } from "react";
 import { siteConfig } from "@/config/site";
 
 const Footer = () => {
   // Strip any non-digits so the link always works
   const waNumber = siteConfig.phone.replace(/\D/g, "");
-  const whatsappUrl = `https://wa.me/${waNumber}?text=${encodeURIComponent(
+  const prefilled = encodeURIComponent(
     `Hello ${siteConfig.brand}, I'd like to know more about your products.`
-  )}`;
+  );
+  const whatsappUrl = `https://api.whatsapp.com/send?phone=${waNumber}&text=${prefilled}`;
+  const whatsappAppUrl = `whatsapp://send?phone=${waNumber}&text=${prefilled}`;
+
+  const onWhatsAppClick = (e: MouseEvent<HTMLAnchorElement>) => {
+    const ua = navigator.userAgent || navigator.vendor;
+    const isMobile = /Android|iPhone|iPad|iPod/i.test(ua);
+    if (!isMobile) return; // Desktop: let the web link open in new tab
+    e.preventDefault();
+    const opened = window.open(whatsappAppUrl, "_blank");
+    setTimeout(() => {
+      try {
+        if (!opened || opened.closed) {
+          window.open(whatsappUrl, "_blank", "noopener");
+        }
+      } catch {
+        window.open(whatsappUrl, "_blank", "noopener");
+      }
+    }, 1200);
+  };
 
   return (
     <footer id="contact" className="bg-brand text-brand-foreground mt-auto">
@@ -38,6 +58,7 @@ const Footer = () => {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={onWhatsAppClick}
                 className="inline-flex items-center gap-2 mt-4 rounded-full bg-brand-foreground text-brand px-5 py-3 font-medium transition-all hover:scale-[1.02] hover:shadow-lg"
               >
                 <MessageCircle className="h-5 w-5" />
