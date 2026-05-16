@@ -1,6 +1,6 @@
 // Easily customize site-wide content here
 export const siteConfig = {
-  brand: "MalharCorp",
+  brand: "Malhar Corp",
   tagline: "Elevating Everyday Spaces with Timeless Elegance",
   // International format (country code + number, no "+" or spaces)
   phone: "919657574055",
