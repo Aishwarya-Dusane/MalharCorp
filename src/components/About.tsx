@@ -23,7 +23,7 @@ const About = () => {
       </div>
 
       {/* Body */}
-      <div className="container mx-auto px-6 py-20 md:py-28 max-w-3xl">
+      <div className="container mx-auto px-6 py-20 max-w-3xl">
         <div className="space-y-7 text-lg leading-relaxed text-foreground/80">
           <p>
             At <span className="text-brand font-medium">Malhar Corp</span>, we
